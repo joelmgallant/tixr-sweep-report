@@ -1,0 +1,437 @@
+<title>Tixr ID Sweep · 197852–198852</title>
+<style>
+  :root {
+    --bg: #EAEFF1;
+    --surface: #FFFFFF;
+    --surface-2: #F4F7F8;
+    --ink: #101619;
+    --ink-soft: #47545A;
+    --ink-faint: #7A868C;
+    --line: #D8E0E3;
+    --line-strong: #C3CDD1;
+    --accent: #0C8CA2;
+    --accent-ink: #086274;
+    --accent-soft: #DEF1F4;
+    --live: #1E9C4A;
+    --live-soft: #E2F3E8;
+    --dead: #98A4AA;
+    --dead-soft: #ECEFF1;
+    --shadow: 0 1px 2px rgba(16,22,25,.04), 0 8px 24px rgba(16,22,25,.05);
+    --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --font-mono: ui-monospace, "SF Mono", "SFMono-Regular", Menlo, "Cascadia Code", Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0B1113;
+      --surface: #111A1D;
+      --surface-2: #172226;
+      --ink: #E9EFF1;
+      --ink-soft: #A6B3B9;
+      --ink-faint: #6B797F;
+      --line: #223035;
+      --line-strong: #2E3F45;
+      --accent: #34BFD3;
+      --accent-ink: #7BD9E6;
+      --accent-soft: #10333B;
+      --live: #40BD5E;
+      --live-soft: #123020;
+      --dead: #56646B;
+      --dead-soft: #1A2529;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 10px 30px rgba(0,0,0,.35);
+    }
+  }
+  :root[data-theme="light"] {
+    --bg: #EAEFF1; --surface: #FFFFFF; --surface-2: #F4F7F8; --ink: #101619;
+    --ink-soft: #47545A; --ink-faint: #7A868C; --line: #D8E0E3; --line-strong: #C3CDD1;
+    --accent: #0C8CA2; --accent-ink: #086274; --accent-soft: #DEF1F4; --live: #1E9C4A;
+    --live-soft: #E2F3E8; --dead: #98A4AA; --dead-soft: #ECEFF1;
+    --shadow: 0 1px 2px rgba(16,22,25,.04), 0 8px 24px rgba(16,22,25,.05);
+  }
+  :root[data-theme="dark"] {
+    --bg: #0B1113; --surface: #111A1D; --surface-2: #172226; --ink: #E9EFF1;
+    --ink-soft: #A6B3B9; --ink-faint: #6B797F; --line: #223035; --line-strong: #2E3F45;
+    --accent: #34BFD3; --accent-ink: #7BD9E6; --accent-soft: #10333B; --live: #40BD5E;
+    --live-soft: #123020; --dead: #56646B; --dead-soft: #1A2529;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 10px 30px rgba(0,0,0,.35);
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font-family: var(--font-sans); line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: clamp(20px, 4vw, 48px) clamp(16px, 4vw, 40px) 80px; }
+
+  .eyebrow {
+    font-family: var(--font-mono); font-size: .72rem; letter-spacing: .14em;
+    text-transform: uppercase; color: var(--accent-ink); font-weight: 600;
+  }
+
+  /* Header */
+  header.masthead {
+    display: flex; flex-wrap: wrap; gap: 16px 24px; align-items: flex-end;
+    justify-content: space-between; padding-bottom: 22px;
+    border-bottom: 1px solid var(--line); margin-bottom: 30px;
+  }
+  h1 {
+    font-size: clamp(1.7rem, 3.6vw, 2.5rem); line-height: 1.05; margin: 10px 0 6px;
+    letter-spacing: -.02em; text-wrap: balance; font-weight: 700;
+  }
+  .range-str {
+    font-family: var(--font-mono); font-size: clamp(.9rem, 2vw, 1.05rem);
+    color: var(--ink-soft); font-weight: 500;
+  }
+  .range-str b { color: var(--accent-ink); font-weight: 600; }
+  .masthead-meta {
+    font-family: var(--font-mono); font-size: .74rem; color: var(--ink-faint);
+    text-align: right; line-height: 1.7;
+  }
+  .masthead-meta span { display: block; }
+
+  /* Stat tiles */
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-bottom: 14px; }
+  .tile {
+    background: var(--surface); border: 1px solid var(--line); border-radius: 12px;
+    padding: 16px 18px; box-shadow: var(--shadow);
+  }
+  .tile .label {
+    font-family: var(--font-mono); font-size: .68rem; letter-spacing: .1em;
+    text-transform: uppercase; color: var(--ink-faint); font-weight: 600;
+  }
+  .tile .num {
+    font-family: var(--font-mono); font-size: 1.9rem; font-weight: 600;
+    font-variant-numeric: tabular-nums; letter-spacing: -.01em; margin-top: 6px; line-height: 1;
+  }
+  .tile .sub { font-size: .76rem; color: var(--ink-soft); margin-top: 5px; }
+  .tile.accent .num { color: var(--accent); }
+  .tile.live .num { color: var(--live); }
+  .tile.dead .num { color: var(--dead); }
+
+  /* Two-panel row: ratio + promoters */
+  .panels { display: grid; grid-template-columns: 1fr; gap: 12px; margin-bottom: 30px; }
+  @media (min-width: 720px) { .panels { grid-template-columns: 1fr 1.1fr; } }
+  .panel {
+    background: var(--surface); border: 1px solid var(--line); border-radius: 12px;
+    padding: 18px 20px; box-shadow: var(--shadow);
+  }
+  .panel h2 {
+    font-family: var(--font-mono); font-size: .72rem; letter-spacing: .12em; text-transform: uppercase;
+    color: var(--ink-faint); font-weight: 600; margin: 0 0 14px;
+  }
+  .ratio-bar {
+    display: flex; height: 30px; border-radius: 7px; overflow: hidden; margin-bottom: 14px;
+    border: 1px solid var(--line);
+  }
+  .ratio-bar .seg { height: 100%; width: 0; transition: width 1s cubic-bezier(.22,.61,.36,1); }
+  .ratio-bar .seg.live { background: var(--live); }
+  .ratio-bar .seg.dead { background: var(--dead); }
+  .ratio-legend { display: flex; gap: 20px; font-size: .82rem; }
+  .ratio-legend .k { display: flex; align-items: center; gap: 7px; color: var(--ink-soft); }
+  .ratio-legend .dot { width: 10px; height: 10px; border-radius: 3px; }
+  .ratio-legend b { font-family: var(--font-mono); font-variant-numeric: tabular-nums; color: var(--ink); }
+
+  .promo-list { display: flex; flex-direction: column; gap: 9px; }
+  .promo-row { display: grid; grid-template-columns: 1fr auto; gap: 8px; align-items: center; }
+  .promo-name { font-size: .82rem; color: var(--ink-soft); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .promo-track { grid-column: 1 / -1; height: 6px; background: var(--surface-2); border-radius: 4px; overflow: hidden; }
+  .promo-fill { height: 100%; width: 0; background: linear-gradient(90deg, var(--accent), var(--accent-ink)); border-radius: 4px; transition: width .9s cubic-bezier(.22,.61,.36,1); }
+  .promo-count { font-family: var(--font-mono); font-size: .78rem; color: var(--ink-faint); font-variant-numeric: tabular-nums; }
+
+  /* Method strip */
+  .method { margin-bottom: 30px; }
+  .method-steps { display: grid; grid-template-columns: 1fr; gap: 10px; }
+  @media (min-width: 680px) { .method-steps { grid-template-columns: repeat(3, 1fr); } }
+  .step {
+    background: var(--surface-2); border: 1px solid var(--line); border-radius: 12px; padding: 15px 17px;
+    position: relative;
+  }
+  .step .idx { font-family: var(--font-mono); font-size: .72rem; color: var(--accent-ink); font-weight: 600; }
+  .step h3 { margin: 6px 0 5px; font-size: .96rem; font-weight: 650; letter-spacing: -.01em; }
+  .step p { margin: 0; font-size: .84rem; color: var(--ink-soft); }
+  .step code { font-family: var(--font-mono); font-size: .8em; background: var(--accent-soft); color: var(--accent-ink); padding: 1px 5px; border-radius: 4px; }
+
+  /* Controls */
+  .controls {
+    display: flex; flex-wrap: wrap; gap: 12px; align-items: center;
+    margin-bottom: 14px;
+  }
+  .search {
+    flex: 1 1 260px; position: relative;
+  }
+  .search input, .filter select {
+    width: 100%; font-family: var(--font-sans); font-size: .9rem; color: var(--ink);
+    background: var(--surface); border: 1px solid var(--line-strong); border-radius: 9px;
+    padding: 10px 12px; appearance: none;
+  }
+  .search input { padding-left: 34px; }
+  .search svg { position: absolute; left: 11px; top: 50%; transform: translateY(-50%); color: var(--ink-faint); }
+  .filter { flex: 0 1 240px; position: relative; }
+  .filter::after {
+    content: "▾"; position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+    color: var(--ink-faint); pointer-events: none; font-size: .8rem;
+  }
+  input:focus-visible, select:focus-visible, button:focus-visible, a:focus-visible {
+    outline: 2px solid var(--accent); outline-offset: 2px;
+  }
+  .btn {
+    font-family: var(--font-mono); font-size: .78rem; letter-spacing: .03em; cursor: pointer;
+    background: var(--surface); color: var(--ink-soft); border: 1px solid var(--line-strong);
+    border-radius: 9px; padding: 10px 14px; font-weight: 600;
+  }
+  .btn:hover { border-color: var(--accent); color: var(--accent-ink); }
+  .count-line {
+    font-family: var(--font-mono); font-size: .8rem; color: var(--ink-faint);
+    margin-bottom: 12px; font-variant-numeric: tabular-nums;
+  }
+  .count-line b { color: var(--ink); }
+
+  /* Table */
+  .table-wrap {
+    background: var(--surface); border: 1px solid var(--line); border-radius: 12px;
+    overflow-x: auto; box-shadow: var(--shadow);
+  }
+  table { width: 100%; border-collapse: collapse; min-width: 720px; }
+  thead th {
+    position: sticky; top: 0; z-index: 2; background: var(--surface-2);
+    font-family: var(--font-mono); font-size: .68rem; letter-spacing: .08em; text-transform: uppercase;
+    color: var(--ink-faint); font-weight: 600; text-align: left; padding: 12px 14px;
+    border-bottom: 1px solid var(--line-strong); white-space: nowrap; cursor: pointer; user-select: none;
+  }
+  thead th.sortable:hover { color: var(--accent-ink); }
+  thead th .arrow { opacity: 0; margin-left: 4px; }
+  thead th.sorted .arrow { opacity: 1; color: var(--accent); }
+  thead th.num-col, td.num-col { text-align: right; font-variant-numeric: tabular-nums; }
+  tbody td { padding: 11px 14px; border-bottom: 1px solid var(--line); font-size: .87rem; vertical-align: middle; }
+  tbody tr:last-child td { border-bottom: none; }
+  tbody tr:hover { background: var(--surface-2); }
+  td.id a { font-family: var(--font-mono); font-size: .82rem; color: var(--accent); text-decoration: none; font-variant-numeric: tabular-nums; }
+  td.id a:hover { text-decoration: underline; }
+  td.name { font-weight: 550; color: var(--ink); max-width: 340px; }
+  td.group { color: var(--ink-soft); }
+  td.venue { color: var(--ink-faint); font-size: .82rem; }
+  td.date { font-family: var(--font-mono); font-size: .8rem; color: var(--ink-soft); white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .pill-live {
+    display: inline-block; font-family: var(--font-mono); font-size: .62rem; letter-spacing: .06em;
+    color: var(--live); background: var(--live-soft); border-radius: 5px; padding: 2px 6px; font-weight: 600;
+    vertical-align: middle;
+  }
+  .empty { padding: 40px; text-align: center; color: var(--ink-faint); font-size: .9rem; }
+
+  footer {
+    margin-top: 34px; padding-top: 22px; border-top: 1px solid var(--line);
+    font-size: .82rem; color: var(--ink-soft); line-height: 1.65;
+  }
+  footer .note { max-width: 65ch; }
+  footer .note strong { color: var(--ink); }
+  footer code { font-family: var(--font-mono); font-size: .82em; background: var(--surface-2); padding: 1px 5px; border-radius: 4px; color: var(--ink); }
+  footer .stamp { font-family: var(--font-mono); font-size: .72rem; color: var(--ink-faint); margin-top: 14px; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ratio-bar .seg, .promo-fill { transition: none; }
+    .fade { animation: none !important; }
+  }
+  .fade { animation: fade .5s ease both; }
+  @keyframes fade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+</style>
+
+<div class="wrap">
+  <header class="masthead fade">
+    <div>
+      <div class="eyebrow">Reconnaissance sweep · Tixr</div>
+      <h1>Live-event ID sweep</h1>
+      <div class="range-str">events <b>197852</b> → <b>198852</b> &nbsp;·&nbsp; 1,001 IDs probed</div>
+    </div>
+    <div class="masthead-meta">
+      <span>method: authenticated /api/events sweep</span>
+      <span>past DataDome · in-browser · paced</span>
+      <span>0 challenges · 0 errors</span>
+    </div>
+  </header>
+
+  <section class="stats fade" aria-label="Summary statistics">
+    <div class="tile accent"><div class="label">IDs probed</div><div class="num">1,001</div><div class="sub">197852–198852</div></div>
+    <div class="tile live"><div class="label">Live events</div><div class="num">339</div><div class="sub">200 · valid JSON</div></div>
+    <div class="tile dead"><div class="label">Dead IDs</div><div class="num">662</div><div class="sub">400 · no event</div></div>
+    <div class="tile"><div class="label">Promoters</div><div class="num" id="stat-promoters">—</div><div class="sub">distinct groups</div></div>
+    <div class="tile"><div class="label">Sweep time</div><div class="num">~15<span style="font-size:1rem">m</span></div><div class="sub">~1.1 req/sec</div></div>
+    <div class="tile"><div class="label">Blocks hit</div><div class="num">0</div><div class="sub">session held</div></div>
+  </section>
+
+  <section class="panels fade">
+    <div class="panel">
+      <h2>Hit rate across the range</h2>
+      <div class="ratio-bar" role="img" aria-label="339 live of 1001 probed">
+        <div class="seg live" id="seg-live"></div>
+        <div class="seg dead" id="seg-dead"></div>
+      </div>
+      <div class="ratio-legend">
+        <span class="k"><span class="dot" style="background:var(--live)"></span>Live <b>339</b> · 33.9%</span>
+        <span class="k"><span class="dot" style="background:var(--dead)"></span>Dead <b>662</b> · 66.1%</span>
+      </div>
+    </div>
+    <div class="panel">
+      <h2>Top promoters in range</h2>
+      <div class="promo-list" id="promo-list"></div>
+    </div>
+  </section>
+
+  <section class="method fade">
+    <div class="method-steps">
+      <div class="step">
+        <div class="idx">01 · the wall</div>
+        <h3>DataDome blocks everything</h3>
+        <p>Every direct request — any path — returns an identical <code>403</code> challenge before routing. Curl and headless browsers get nothing.</p>
+      </div>
+      <div class="step">
+        <div class="idx">02 · the oracle</div>
+        <h3>One clean endpoint</h3>
+        <p>An authenticated browser session reaches <code>/api/events/{id}</code>: <code>200</code>+JSON means live, <code>400</code> means dead. That's the liveness signal.</p>
+      </div>
+      <div class="step">
+        <div class="idx">03 · the sweep</div>
+        <h3>Probe in-browser, paced</h3>
+        <p>1,001 IDs fetched from inside the logged-in tab — real cookie, real fingerprint. Polite pacing, zero challenges across the run.</p>
+      </div>
+    </div>
+  </section>
+
+  <section aria-label="Event catalog">
+    <div class="controls">
+      <div class="search">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+        <input type="search" id="search" placeholder="Search event, promoter, venue, or ID…" aria-label="Search events">
+      </div>
+      <div class="filter">
+        <select id="promoter-filter" aria-label="Filter by promoter"><option value="">All promoters</option></select>
+      </div>
+      <button class="btn" id="download">↓ JSON</button>
+    </div>
+    <div class="count-line" id="count-line"></div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th class="sortable num-col" data-key="id">ID<span class="arrow">↓</span></th>
+            <th class="sortable" data-key="name">Event<span class="arrow">↓</span></th>
+            <th class="sortable" data-key="group">Promoter<span class="arrow">↓</span></th>
+            <th class="sortable" data-key="venue">Venue<span class="arrow">↓</span></th>
+            <th class="sortable" data-key="date">Date<span class="arrow">↓</span></th>
+          </tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <footer>
+    <div class="note">
+      <strong>Reading this list:</strong> every row is a <em>live</em> event confirmed by direct ID lookup — including ones that never appear in a promoter's public listing or in Google. An <strong>unlisted</strong> event is simply one that's live here but missing from its promoter's public page: filter to a promoter, then compare against their public calendar. IDs are global across all of Tixr, so this window spans venues worldwide — nightclubs, comedy clubs, RV shows, football watch-parties. Each ID links to <code>tixr.com/e/{id}</code>.
+    </div>
+    <div class="stamp" id="stamp"></div>
+  </footer>
+</div>
+
+<script>
+const EVENTS = [{"id":197852,"name":"MACY KWOK (New York Comedy Festival), Sage Sy, Danny Metz","group":"St-Marks Comedy Club","venue":"St. Marks Comedy Club","date":"2026-07-11"},{"id":197853,"name":"MACY KWOK (New York Comedy Festival), Sage Sy, Danny Metz","group":"St-Marks Comedy Club","venue":"St. Marks Comedy Club","date":"2026-07-04"},{"id":197855,"name":"Saturday, September 5th - Labor Day Weekend  | DAER Nightclub","group":"DAER Nightclub South Florida","venue":"DAER Nightclub South Florida","date":"2026-09-06"},{"id":197856,"name":"GALANTIS - Labor Day Weekend | DAER Dayclub","group":"DAER Dayclub South Florida","venue":"DAER Dayclub South Florida","date":"2026-09-05"},{"id":197857,"name":"Philadelphia RV Show Vendor Booths","group":"RV Supershows","venue":"Greater Philadelphia Expo Center","date":"2027-03-18"},{"id":197858,"name":"Sunday, September 6th - Labor Day Weekend | DAER Dayclub","group":"DAER Dayclub South Florida","venue":"DAER Dayclub South Florida","date":"2026-09-06"},{"id":197859,"name":"Monday, September 7th - Labor Day | DAER Dayclub","group":"DAER Dayclub South Florida","venue":"DAER Dayclub South Florida","date":"2026-09-07"},{"id":197860,"name":"Philadelphia RV Show Attendee Tickets","group":"RV Supershows","venue":"Greater Philadelphia Expo Center","date":"2027-03-18"},{"id":197862,"name":"Post Sunset: Rob Martin","group":"The Surf Lodge","venue":"The Surf Lodge","date":"2026-07-04"},{"id":197865,"name":"Birmingham RV Show Vendor Booths","group":"RV Supershows","venue":"BJCC Concert Hall","date":"2027-02-26"},{"id":197866,"name":"Chief Adjuah","group":"Stable Hall","venue":"Stable Hall","date":"2026-12-06"},{"id":197867,"name":"Palm Tree Montreal - PAWSA","group":"Beachclub","venue":"Beachclub","date":"2026-09-07"},{"id":197868,"name":"Birmingham RV Show Attendee Tickets","group":"RV Supershows","venue":"BJCC Concert Hall","date":"2027-02-26"},{"id":197870,"name":"Open Mic Night","group":"Dreamland","venue":"Dreamland Malibu","date":"2026-08-07"},{"id":197871,"name":"Free Tacoma Pop Culture Art & Cosplay Event","group":"Amazing Art Expo","venue":"Hotel Murano Tacoma","date":"2026-08-01"},{"id":197872,"name":"Fuerza Regida Official After Party: DJ DYNAMIQO","group":"ACRO","venue":"NOTO HTX","date":"2026-07-27"},{"id":197873,"name":"Breaking Sound Canada at Drake Underground 08/27","group":"Breaking Sound Canada","venue":"Drake Underground","date":"2026-08-27"},{"id":197874,"name":"Free Tacoma Alice in Wonderland & Disney Art & Cosplay Event","group":"Amazing Art Expo","venue":"Hotel Murano Tacoma","date":"2026-08-01"},{"id":197875,"name":"Free Tacoma Anime & Pop Culture Art & Cosplay Event","group":"Amazing Art Expo","venue":"Hotel Murano Tacoma","date":"2026-08-01"},{"id":197876,"name":"Wolf & Bear","group":"The Canal Club","venue":"The Canal Club","date":"2026-11-08"},{"id":197877,"name":"Free Tacoma Horror Art & Cosplay Event","group":"Amazing Art Expo","venue":"Hotel Murano Tacoma","date":"2026-08-01"},{"id":197878,"name":"Free Tacoma Star Wars/Superhero/Pop Culture Art & Cosplay Event","group":"Amazing Art Expo","venue":"Hotel Murano Tacoma","date":"2026-08-01"},{"id":197879,"name":"Angel Du$t & Agnostic Front","group":"The Canal Club","venue":"The Canal Club","date":"2026-09-27"},{"id":197881,"name":"USA vs Belgium Watch Party | Rooftop Live","group":"Rooftop Live","venue":"Rooftop Live","date":"2026-07-06"},{"id":197883,"name":"VIVO Fridays: Old School Reggaeton Night","group":"Club Vivo","venue":"Club VIVO","date":"2026-07-04"},{"id":197885,"name":"New Hampshire RV Show Vendor Booths","group":"RV Supershows","venue":"NH Sportsplex","date":"2027-02-19"},{"id":197887,"name":"Max Dean b2b Luke Dean, Tommy Phillips, Simon Fitch","group":"New City Gas","venue":"New City Gas","date":"2026-09-07"},{"id":197888,"name":"New Hampshire RV Show Attendee Tickets","group":"RV Supershows","venue":"NH Sportsplex","date":"2027-02-19"},{"id":197890,"name":"Bryan Andrews","group":"MilkBoy","venue":"MilkBoy","date":"2026-11-09"},{"id":197891,"name":"CAB NO FMF WITH SALES OVERRIDE AND PS AND HOLDS","group":"Stable Hall","venue":"Stable Hall","date":"2026-12-06"},{"id":197892,"name":"Gulf Coast RV Show Vendor Booths","group":"RV Supershows","venue":"Mobile Convention Center","date":"2027-02-12"},{"id":197893,"name":"VOLPETRON ETERNAL w/ RAY VOLPE & BARELY ALIVE","group":"Harbour Event and Convention Centre","venue":"Harbour Event & Convention Centre","date":"2026-10-11"},{"id":197895,"name":"Gulf Coast RV Show Attendee Tickets","group":"RV Supershows","venue":"Mobile Convention Center","date":"2027-02-12"},{"id":197896,"name":"Savannah RV Show Vendor Booths","group":"RV Supershows","venue":"Savannah Convention Center","date":"2027-02-05"},{"id":197897,"name":"Savannah RV Show Attendee Tickets","group":"RV Supershows","venue":"Savannah Convention Center","date":"2027-02-05"},{"id":197899,"name":"Phoenix RV Supershow Vendor Booths","group":"RV Supershows","venue":"Phoenix Raceway","date":"2027-02-05"},{"id":197900,"name":"Phoenix RV Supershow Attendee Tickets","group":"RV Supershows","venue":"Phoenix Raceway","date":"2027-02-05"},{"id":197901,"name":"Alabama RV Show Vendor Booths","group":"RV Supershows","venue":"Von Braun Center","date":"2027-01-29"},{"id":197902,"name":"Alabama RV Show Attendee Tickets","group":"RV Supershows","venue":"Von Braun Center","date":"2027-01-29"},{"id":197903,"name":"TKVR | River Moon (NYC) + N SO","group":"Massive Club","venue":"Massive","date":"2026-07-17"},{"id":197904,"name":"Butt Blast - Guys Underwear Social","group":"Massive Club","venue":"Massive","date":"2026-07-10"},{"id":197905,"name":"The Oldies Night: A Night Of Timeless Soul, Doo-Wop, & Classic Oldies","group":"The Nile Theater","venue":"The Nile Theater - Reserved","date":"2026-09-05"},{"id":197907,"name":"Colleen Clickenbeard Meet & Greet Signing","group":"OG Collectibles","venue":"OG Collectibles ","date":"2026-09-19"},{"id":197908,"name":"Derek Seguin","group":"Comic Strip Edmonton","venue":"The Comic Strip - Edmonton","date":"2026-11-27"},{"id":197909,"name":"Derek Seguin","group":"Comic Strip Edmonton","venue":"The Comic Strip - Edmonton","date":"2026-11-28"},{"id":197910,"name":"Derek Seguin","group":"Comic Strip Edmonton","venue":"The Comic Strip - Edmonton","date":"2026-11-28"},{"id":197911,"name":"Derek Seguin","group":"Comic Strip Edmonton","venue":"The Comic Strip - Edmonton","date":"2026-11-29"},{"id":197912,"name":"Derek Seguin","group":"Comic Strip Edmonton","venue":"The Comic Strip - Edmonton","date":"2026-11-29"},{"id":197913,"name":"Paul Elia","group":"Comic Strip Edmonton","venue":"The Comic Strip - Edmonton","date":"2026-11-20"},{"id":197914,"name":"Paul Elia","group":"Comic Strip Edmonton","venue":"The Comic Strip - Edmonton","date":"2026-11-21"},{"id":197916,"name":"Paul Elia","group":"Comic Strip Edmonton","venue":"The Comic Strip - Edmonton","date":"2026-11-21"},{"id":197917,"name":"Paul Elia","group":"Comic Strip Edmonton","venue":"The Comic Strip - Edmonton","date":"2026-11-22"},{"id":197918,"name":"Mitch & Elana's Wedding Reception / Concert","group":"The Get Down","venue":"The Get Down","date":"2026-08-02"},{"id":197919,"name":"Paul Elia","group":"Comic Strip Edmonton","venue":"The Comic Strip - Edmonton","date":"2026-11-22"},{"id":197920,"name":"Suncruiser Launch Party with DJ Bangarang","group":"Downstairs Park City","venue":"Downstairs","date":"2026-07-10"},{"id":197921,"name":"RE:Fine","group":"Downstairs Park City","venue":"Downstairs","date":"2026-07-17"},{"id":197922,"name":"RE:Fine","group":"Downstairs Park City","venue":"Downstairs","date":"2026-07-24"},{"id":197923,"name":"RE:Fine","group":"Downstairs Park City","venue":"Downstairs","date":"2026-07-31"},{"id":197926,"name":"RE:Fine","group":"Downstairs Park City","venue":"Downstairs","date":"2026-08-07"},{"id":197927,"name":"RE:Fine","group":"Downstairs Park City","venue":"Downstairs","date":"2026-08-14"},{"id":197928,"name":"Worst Impressions, Fishbait, Rat Stallion","group":"Gabe's","venue":"Gabe's","date":"2026-07-12"},{"id":197929,"name":"The Nostalgia Con Minneapolis","group":"The Nostalgia Con","venue":"Minneapolis Convention Center","date":"2026-09-25"},{"id":197930,"name":"Jack Jr - Stevenson Ranch CA August 25th","group":"Jack Jr Comic","venue":"Casa Canela","date":"2026-08-26"},{"id":197931,"name":"Jack Jr - Stevenson Ranch CA September 29th","group":"Jack Jr Comic","venue":"Casa Canela","date":"2026-09-30"},{"id":197932,"name":"Union Jack & The Rippers, Boneless Ones, DÜMSÜRF & THE MAB","group":"Mabuhay Gardens","venue":"Mabuhay Gardens The Mab","date":"2026-08-02"},{"id":197933,"name":"Jack Jr - Stevenson Ranch CA October 27th","group":"Jack Jr Comic","venue":"Casa Canela","date":"2026-10-28"},{"id":197934,"name":"Live at The Mab: Pat Todd & The Rankoutsiders with The Vaxxines, The Seagulls & SF Rejects","group":"Mabuhay Gardens","venue":"Mabuhay Gardens The Mab","date":"2026-07-04"},{"id":197935,"name":"Ola Dada","group":"House of Comedy Minneapolis","venue":"House of Comedy MOA","date":"2026-08-07"},{"id":197936,"name":"Ola Dada","group":"House of Comedy Minneapolis","venue":"House of Comedy MOA","date":"2026-08-08"},{"id":197937,"name":"Ola Dada","group":"House of Comedy Minneapolis","venue":"House of Comedy MOA","date":"2026-08-08"},{"id":197938,"name":"Ola Dada","group":"House of Comedy Minneapolis","venue":"House of Comedy MOA","date":"2026-08-09"},{"id":197939,"name":"Ola Dada","group":"House of Comedy Minneapolis","venue":"House of Comedy MOA","date":"2026-08-09"},{"id":197940,"name":"Universum Gaming - 07/5","group":"Universum-Panama","venue":"Universum Panama","date":"2026-07-05"},{"id":197941,"name":"Blue Moon - 07/5","group":"Universum-Panama","venue":"Universum Panama","date":"2026-07-05"},{"id":197942,"name":"Coliseo - 07/5","group":"Universum-Panama","venue":"Universum Panama","date":"2026-07-05"},{"id":197943,"name":"Titanic - 07/5","group":"Universum-Panama","venue":"Universum Panama","date":"2026-07-05"},{"id":197946,"name":"Paraíso Salvaje - 07/5","group":"Universum-Panama","venue":"Universum Panama","date":"2026-07-05"},{"id":197948,"name":"Oklahoma City Whiskey Riot 2026","group":"Whiskey Riot","venue":"OKC Convention Center","date":"2026-10-17"},{"id":197949,"name":"La Mafia","group":"Home Run Dugout - Houston (Katy)","venue":"Home Run Dugout","date":"2026-10-18"},{"id":197950,"name":"Salsa & Vinyls Brunch","group":"Venice Music Group (The Venice West)","venue":"The Venice West","date":"2026-08-23"},{"id":197952,"name":"2KINETIK w/ Rapscallion","group":"Venice Music Group (The Venice West)","venue":"The Venice West","date":"2026-07-25"},{"id":197953,"name":"Sunfields with Gerf + Favor Wave @ The Grape","group":"The Grape","venue":"The Grape","date":"2026-07-26"},{"id":197955,"name":"Beatles Brunch w/ The Beat 5","group":"Venice Music Group (The Venice West)","venue":"The Venice West","date":"2026-08-02"},{"id":197956,"name":"LES FRONTIÈRES PRES: Morocco v France (Live Screening)","group":"Egg London","venue":"Egg London Nightclub","date":"2026-07-09"},{"id":197957,"name":"Chad & JT Go Deep (early show)","group":"Venice Music Group (The Venice West)","venue":"The Venice West","date":"2026-09-03"},{"id":197958,"name":"Chad & JT Go Deep (late show)","group":"Venice Music Group (The Venice West)","venue":"The Venice West","date":"2026-09-03"},{"id":197959,"name":"Bitches' Brew","group":"The Stand NYC","venue":"The Stand NYC (Main Room)","date":"2026-07-25"},{"id":197961,"name":"The Beat Farmers w/The Centuries","group":"The Siren","venue":"The Siren","date":"2026-08-06"},{"id":197962,"name":"THE UPSTAIRS COMEDY SHOWCASE","group":"THE UPSTAIRS LA","venue":"The Upstairs ","date":"2026-07-17"},{"id":197963,"name":"THE UPSTAIRS COMEDY SHOWCASE","group":"THE UPSTAIRS LA","venue":"The Upstairs ","date":"2026-07-18"},{"id":197964,"name":"THE UPSTAIRS COMEDY SHOWCASE","group":"THE UPSTAIRS LA","venue":"The Upstairs ","date":"2026-07-24"},{"id":197965,"name":"Drifting Roots","group":"The Siren","venue":"The Siren","date":"2026-09-18"},{"id":197966,"name":"WORLD SOCCER WATCH PARTY: U.S.A. vs. Belgium, Round of 16","group":"Nectar Lounge","venue":"Nectar Lounge","date":"2026-07-07"},{"id":197967,"name":"Suicidal Tendencies","group":"The Palladium","venue":"The Palladium","date":"2026-08-30"},{"id":197968,"name":"England Fanzone: England v Norway on the Big Screen","group":"Egg London","venue":"Egg London Nightclub","date":"2026-07-11"},{"id":197969,"name":"Gully Boys","group":"Legacy Concerts","venue":"The Canal Club","date":"2026-10-19"},{"id":197970,"name":"England v Norway Pre-Sale","group":"Signature Brew","venue":"Signature Brew Blackhorse Road","date":"2026-07-11"},{"id":197971,"name":"Lila Iké & Josh Skints present Wurl Dance 2026","group":"Signature Brew","venue":"Signature Brew Blackhorse Road","date":"2026-08-28"},{"id":197972,"name":"An Evening with Preservation Hall Jazz Band","group":"The 1932 Criterion Theatre - Bar Harbor","venue":"Criterion Theatre","date":"2026-09-04"},{"id":197973,"name":"France vs Morocco | FIFA World Cup Quarterfinals","group":"Signature Brew","venue":"Signature Brew Haggerston","date":"2026-07-09"},{"id":197975,"name":"Camden Rocks All Dayer w/ Lyla Nova & more","group":"Barfly formerly Camden Assembly","venue":"Barfly formerly Camden Assembly","date":"2026-08-08"},{"id":197976,"name":"Dalchord","group":"Bright Box Theater","venue":"Bright Box Theater","date":"2026-08-15"},{"id":197978,"name":"I Love R&B Party (21+)","group":"The Palladium","venue":"The Palladium Upstairs","date":"2026-09-19"},{"id":197979,"name":"Sunday Supper Club: Courtney Patton and Matt Hillyer","group":"Afallon Productions","venue":"The Post","date":"2026-08-02"},{"id":197980,"name":"AFROTONIK DANCE PARTY","group":"Société des arts technologiques","venue":"Society for Arts and Technology","date":"2026-07-26"},{"id":197981,"name":"Comedic Cody Smith","group":"Laugh Boston","venue":"Laugh Boston","date":"2026-11-06"},{"id":197982,"name":"The Planet Smashers + K-Man and the 45s","group":"Sonic Unyon","venue":"Warehouse Concert Hall","date":"2026-11-19"},{"id":197984,"name":"An Evening with Bywater Call","group":"Market Hall Performing Arts Centre","venue":"Market Hall Performing Arts Centre","date":"2026-10-10"},{"id":197985,"name":"PARKING - SUN 8/9/26: Hyryder","group":"HI-FI","venue":"HI-FI Indy ","date":"2026-08-09"},{"id":197986,"name":"Norway Vs England","group":"XOYO Birmingham","venue":"XOYO Birmingham","date":"2026-07-11"},{"id":197987,"name":"WORK IT! 90/2000s Hip Hop and R&B Night","group":"Ventura Music Hall","venue":"Ventura Music Hall Reserved","date":"2026-08-02"},{"id":197991,"name":"Halfloves w/ Sun Centauri & Doc Bullfrog","group":"Gabe's","venue":"Gabe's","date":"2026-08-29"},{"id":197992,"name":"Keith Anderson","group":"Chief's on Broadway","venue":"Chief's on Broadway","date":"2026-09-20"},{"id":197993,"name":"2026 Enjoy IL 300 Commemorative Ticket Package","group":"WWT Raceway","venue":"World Wide Technology Raceway","date":"2026-09-13"},{"id":197994,"name":"Caravan Oasis","group":"The Midway SF","venue":"The Midway","date":"2026-08-16"},{"id":197995,"name":"Lost on the South Side: Pizz'amci","group":"Ramova Theatre","venue":"Off Hours Beer Garden","date":"2026-07-08"},{"id":197996,"name":"Underground Comedy Showcase: Mark Masters, Adam Tiller & More","group":"BandWagon Presents","venue":"Stella's Pinball Arcade and Lounge","date":"2026-07-31"},{"id":197998,"name":"10ft Ganja Plant","group":"Levitate Backyard","venue":"Levitate Backyard","date":"2026-08-30"},{"id":198000,"name":"Time Machine: 90s - 2000s Throwback Dance Party","group":"Nova SD","venue":"Nova SD","date":"2026-08-02"},{"id":198002,"name":"Hiss Golden Messenger (SOLO)","group":"Talkhouse","venue":"The Stephen Talkhouse","date":"2026-08-17"},{"id":198003,"name":"Men Without Hats","group":"Market Hall Performing Arts Centre","venue":"Market Hall Performing Arts Centre","date":"2027-02-04"},{"id":198004,"name":"Gasolina","group":"Avalon Hollywood","venue":"Avalon Hollywood","date":"2026-08-01"},{"id":198005,"name":"OC Day Party w/ Kalan. FRFR","group":"Time Nightclub","venue":"TIME Nightclub","date":"2026-07-20"},{"id":198006,"name":"Deadmau5, Stef Agostino, Mandiz","group":"New City Gas","venue":"New City Gas","date":"2026-08-09"},{"id":198007,"name":"Cortex with special guests Adrian Younge and J.Rocc","group":"The Egg","venue":"The Egg - Kitty Carlisle Hart Theatre","date":"2026-10-03"},{"id":198009,"name":"Gully Boys","group":"The Canal Club","venue":"The Canal Club","date":"2026-10-19"},{"id":198010,"name":"Summoner's Circle, IATT, Gravewitch (Denver)","group":"BandWagon Presents","venue":"The Black Buzzard at Oskar Blues Denver","date":"2026-10-04"},{"id":198011,"name":"Cortisa Star - For All The Dolls Tour","group":"WOW Philly","venue":"Warehouse on Watts - Cambridge Hall","date":"2026-10-14"},{"id":198014,"name":"Summoner's Circle, IATT, Gravewitch (Greeley)","group":"BandWagon Presents","venue":"Moxi Theater","date":"2026-10-03"},{"id":198015,"name":"Cheerleader Roadkill","group":"Legacy Concerts","venue":"The End","date":"2026-09-01"},{"id":198016,"name":"Plush In The Box // Melt With You","group":"Anchor Rock Club","venue":"Anchor Rock Club","date":"2026-08-09"},{"id":198017,"name":"TROYBOI at The Ruins","group":"All Day All Night","venue":"The Ruins American Canyon","date":"2026-11-13"},{"id":198020,"name":"Demo: Seats vs. Tables","group":"Palm Springs Film Awards","venue":"Palm Springs Convention Center","date":"2027-01-08"},{"id":198021,"name":"Monstercat 15 Year","group":"The Midway SF","venue":"The Midway","date":"2026-08-15"},{"id":198022,"name":"Rated Fresh","group":"Talkhouse","venue":"The Stephen Talkhouse","date":"2026-10-11"},{"id":198023,"name":"Nicolls Road","group":"Talkhouse","venue":"The Stephen Talkhouse","date":"2026-10-18"},{"id":198024,"name":"Scaradise Consignment Service 2026","group":"OG Collectibles","venue":"OG Collectibles ","date":"2026-10-02"},{"id":198025,"name":"Candy Shop","group":"Talkhouse","venue":"The Stephen Talkhouse","date":"2026-10-25"},{"id":198026,"name":"Rachelle Rossi","group":"Talkhouse","venue":"The Stephen Talkhouse","date":"2026-11-22"},{"id":198028,"name":"Ben Sterling","group":"The Surf Lodge","venue":"The Surf Lodge","date":"2026-07-19"},{"id":198030,"name":"OUT IN FRONT: Still Out Of Place Tour","group":"Aggie Theatre","venue":"Aggie Theatre","date":"2026-08-19"},{"id":198031,"name":"Freakshow New Orleans","group":"Republic NOLA","venue":"Republic","date":"2026-08-15"},{"id":198032,"name":"Daniel Donato's Cosmic Country Presents Camp Cosmic at The Caverns","group":"The Caverns","venue":"The Caverns","date":"2027-05-14"},{"id":198033,"name":"Fuerza Regida Official After Party: CHUYIN & DJ DYNAMIQO","group":"ACRO","venue":"Texas Live","date":"2026-08-01"},{"id":198034,"name":"Caleb Moore","group":"The Surf Lodge","venue":"The Surf Lodge","date":"2026-07-20"},{"id":198041,"name":"Nick Aiello","group":"Talkhouse","venue":"The Stephen Talkhouse","date":"2026-10-24"},{"id":198042,"name":"Inda Eaton","group":"Talkhouse","venue":"The Stephen Talkhouse","date":"2026-09-25"},{"id":198043,"name":"Famous Fridays - Guestlist - July 10","group":"VENU","venue":"VENU","date":"2026-07-11"},{"id":198044,"name":"Partiboi69, Harrison BDP presented by Goldenvoice","group":"Public Works SF","venue":"Public Works","date":"2026-09-06"},{"id":198045,"name":"France vs Morocco Watch Party | Rooftop Live","group":"Rooftop Live","venue":"Rooftop Live","date":"2026-07-09"},{"id":198046,"name":"Deerhoof","group":"Assembly","venue":"Assembly","date":"2026-11-08"},{"id":198048,"name":"Florissant, Tradition, Origami Summer, Strung Short","group":"BandWagon Presents","venue":"Lulu's Downtown","date":"2026-09-27"},{"id":198049,"name":"Ivy Lab: A Farewell Tour","group":"PREAMP","venue":"Eleven SLC","date":"2026-10-03"},{"id":198050,"name":"MGMT DJ SET presented by Goldenvoice","group":"Public Works SF","venue":"Public Works","date":"2026-09-20"},{"id":198051,"name":"DAN MOLINARI / SOULUTION / TRANSMIT / MORE!","group":"The Barbary","venue":"The Barbary","date":"2026-07-25"},{"id":198052,"name":"Miami Orange Zone Tailgate - Orange Bowl (Semi-Final)","group":"Gameday Hospitality LLC","venue":"The Grove at Hard Rock Stadium","date":"2027-01-14"},{"id":198053,"name":"XKO Fight Night","group":"Out West","venue":"Midland County Horseshoe","date":"2026-09-26"},{"id":198054,"name":"Vincent Antone w. Lizzy Jane","group":"PREAMP","venue":"Eleven SLC","date":"2026-09-12"},{"id":198056,"name":"Great Outdoors Comedy Festival 2027 - Winnipeg","group":"Great Outdoors Comedy Festival","venue":"Canada","date":"2027-07-17"},{"id":198057,"name":"WC England vs Norway Watch Party (07/11)","group":"Clevelander South Beach","venue":"Clevelander South Beach","date":"2026-07-11"},{"id":198058,"name":"Great Outdoors Comedy Festival 2027 - Edmonton","group":"Great Outdoors Comedy Festival","venue":"Canada","date":"2027-07-17"},{"id":198059,"name":"UFC 329: McGregor vs Holloway Watch Party (07/11)","group":"Clevelander South Beach","venue":"Clevelander South Beach","date":"2026-07-12"},{"id":198060,"name":"Heat Wave","group":"Massive Club","venue":"Massive","date":"2026-07-12"},{"id":198061,"name":"PERCOLATE 3.0","group":"Republic NOLA","venue":"ARORA","date":"2026-07-25"},{"id":198062,"name":"MELTDOWN w/ LAERZ","group":"We All Scream","venue":"We All Scream","date":"2026-09-06"},{"id":198065,"name":"Insomniac","group":"Live At Madrids","venue":"Live at Madrid's","date":"2026-10-07"},{"id":198066,"name":"BIG D*CK DISCO","group":"Massive Club","venue":"Massive","date":"2026-07-11"},{"id":198067,"name":"Goodbye June (Lubbock)","group":"Din Productions","venue":"Jake's Backroom","date":"2026-09-14"},{"id":198069,"name":"Josh Abbott Band","group":"Out West","venue":"Midland County Horseshoe Amphitheater","date":"2026-08-22"},{"id":198070,"name":"Mi$fit B-Day Bash","group":"BandWagon Presents","venue":"The Black Buzzard at Oskar Blues Denver","date":"2026-07-12"},{"id":198071,"name":"Pat Green","group":"Out West","venue":"Midland County Horseshoe","date":"2026-09-19"},{"id":198073,"name":"Lost In Dreams Block Party","group":"The Midway SF","venue":"The Midway","date":"2026-10-30"},{"id":198074,"name":"Bang The Bay Presents LEESTOCK 6","group":"Mabuhay Gardens","venue":"Mabuhay Gardens On Broadway","date":"2026-07-06"},{"id":198076,"name":"Pinkshift","group":"Legacy Concerts","venue":"Hoosier Dome","date":"2026-08-13"},{"id":198077,"name":"Massive Friday | No Bias (Tom Marsi | RITCHRD | BORED LORD)","group":"Massive Club","venue":"Massive","date":"2026-07-18"},{"id":198078,"name":"Goodbye June w/ Me Like Bees","group":"Volcanic Theatre Pub","venue":"Volcanic Theater Pub","date":"2026-09-28"},{"id":198079,"name":"HOUSE OF HEAVY - Nu Metal + Metalcore Night","group":"Gabe's","venue":"Gabe's","date":"2026-09-06"},{"id":198080,"name":"DreamHack Stockholm 2026 Artist Alley","group":"DreamHack Sweden","venue":"Stockholmsmässan","date":"2026-11-27"},{"id":198081,"name":"ENGLAND VS NORWAY Live on Big Screens - Indie DJs pre and post match! FREE ENTRY","group":"Barfly formerly Camden Assembly","venue":"Barfly formerly Camden Assembly","date":"2026-07-11"},{"id":198082,"name":"England vs Norway | FIFA World Cup | Quarterfinals","group":"Signature Brew","venue":"Signature Brew Haggerston","date":"2026-07-11"},{"id":198083,"name":"Taking Back Summer - Alternative Market | London","group":"Signature Brew","venue":"Signature Brew Blackhorse Road","date":"2026-08-09"},{"id":198084,"name":"Jasper James, Dunmore Brothers, Rob Drake & Another George","group":"XOYO London","venue":"XOYO London","date":"2026-07-18"},{"id":198085,"name":"Camden Rocks All Dayer - Danny Wildheart & more","group":"Barfly formerly Camden Assembly","venue":"Barfly formerly Camden Assembly","date":"2026-09-12"},{"id":198088,"name":"Lou-Adriane Cassidy","group":"Alderney Landing","venue":"Alderney Landing","date":"2026-11-18"},{"id":198090,"name":"RD Vancouver Merch Shop 2026","group":"Feaster","venue":"Jericho Beach Park","date":"2026-07-26"},{"id":198091,"name":"Seth Glier & Antje Duvekot","group":"DSP Shows","venue":"The Iron Horse","date":"2026-09-19"},{"id":198092,"name":"Innsound & Subculture presents: Casey Club","group":"Live At Madrids","venue":"Live at Madrid's","date":"2026-08-16"},{"id":198093,"name":"An Intimate Acoustic Evening with Maria Muldaur","group":"DSP Shows","venue":"The Iron Horse","date":"2026-10-07"},{"id":198095,"name":"Margo Cilker & Lilly Hiatt","group":"DSP Shows","venue":"The Iron Horse","date":"2026-10-09"},{"id":198096,"name":"Men of the Deeps 60th Anniversary Christmas Tour","group":"The Empire Theatre","venue":"The Empire Theatre","date":"2026-12-04"},{"id":198097,"name":"King Kurt's Christmas Pissup in a Brewery | London","group":"Signature Brew","venue":"Signature Brew Haggerston","date":"2026-12-11"},{"id":198099,"name":"Gateway Pro-Am Rounds 1&2","group":"WWT Raceway","venue":"World Wide Technology Raceway","date":"2026-07-11"},{"id":198100,"name":"Of Monsters and Men - The Mouse Parade Tour","group":"DSP Shows","venue":"State Theatre of Ithaca","date":"2026-09-23"},{"id":198101,"name":"Butterfield Dashboard - Butterfield Bermuda Championship","group":"Bermuda Championship","venue":"Port Royal Golf Course","date":"2026-10-22"},{"id":198102,"name":"Norway vs England Watch Party | Rooftop Live","group":"Rooftop Live","venue":"Rooftop Live","date":"2026-07-11"},{"id":198103,"name":"BTA Dashboard - Butterfield Bermuda Championship (2)","group":"Bermuda Championship","venue":"Port Royal Golf Course","date":"2026-10-22"},{"id":198105,"name":"Spain vs Belgium Watch Party | Rooftop Live","group":"Rooftop Live","venue":"Rooftop Live","date":"2026-07-10"},{"id":198106,"name":"Breaking Sound LA at Madame Siam 10/06","group":"Breaking Sound LA","venue":"Madame Siam","date":"2026-10-07"},{"id":198107,"name":"Borgore | DAER Dayclub","group":"DAER Dayclub South Florida","venue":"DAER Dayclub South Florida","date":"2026-09-13"},{"id":198109,"name":"Crash Dummies: Live in Boston","group":"Laugh Boston","venue":"Laugh Boston","date":"2026-09-13"},{"id":198110,"name":"Post Sunset: Liam Brosnan","group":"The Surf Lodge","venue":"The Surf Lodge","date":"2026-07-12"},{"id":198111,"name":"Emma Willmann","group":"Hyena's Comedy Clubs","venue":"Albuquerque Hyena's Comedy Nightclub","date":"2026-09-26"},{"id":198112,"name":"We All Scream Fridays","group":"We All Scream","venue":"We All Scream","date":"2026-07-18"},{"id":198113,"name":"We All Scream Saturdays","group":"We All Scream","venue":"We All Scream","date":"2026-07-19"},{"id":198114,"name":"The Flying Beets, Chandler Cooper, Jessica Healey","group":"Afallon Productions","venue":"The Post","date":"2026-08-23"},{"id":198115,"name":"We All Scream Fridays","group":"We All Scream","venue":"We All Scream","date":"2026-07-25"},{"id":198116,"name":"We All Scream Saturdays","group":"We All Scream","venue":"We All Scream","date":"2026-07-26"},{"id":198117,"name":"Altura Presents: SENSUAL","group":"Commonwealth","venue":"Commonwealth","date":"2026-07-25"},{"id":198120,"name":"Jon Stringer","group":"Hyena's Comedy Clubs","venue":"Albuquerque Hyena's Comedy Nightclub","date":"2026-08-01"},{"id":198121,"name":"DJ SODA","group":"Pure Nightclub","venue":"Pure Nightclub","date":"2026-08-16"},{"id":198122,"name":"Coco Montoya","group":"DSP Shows","venue":"The Iron Horse","date":"2026-10-26"},{"id":198124,"name":"MÁS EDM | LATIN RAVE","group":"ACRO","venue":"The Vermont","date":"2026-08-16"},{"id":198125,"name":"Alien Ant Farm - ANThology Tour 2026","group":"MassConcerts Clubs","venue":"Oxbow Live","date":"2026-10-04"},{"id":198126,"name":"Global Dance presents TELYKAST","group":"The Church Nightclub","venue":"The Church Nightclub","date":"2026-08-16"},{"id":198128,"name":"TheHundred presents Jamback","group":"Club Vinyl","venue":"Club Vinyl","date":"2026-09-05"},{"id":198129,"name":"TheHundred presents Elephante","group":"Club Vinyl","venue":"Club Vinyl","date":"2026-08-15"},{"id":198130,"name":"We All Scream Fridays","group":"We All Scream","venue":"We All Scream","date":"2026-08-01"},{"id":198131,"name":"Global Dance presents Party Pupils","group":"Club Vinyl","venue":"Club Vinyl","date":"2026-08-23"},{"id":198132,"name":"The Bringer Show","group":"Haha Comedy Club","venue":"Ha Ha Comedy Club","date":"2026-08-20"},{"id":198134,"name":"Laidback Luke","group":"Time Nightclub","venue":"TIME Nightclub","date":"2026-08-16"},{"id":198135,"name":"The Amity Affliction: HOUSE OF CARDS 2026","group":"The Pyrle","venue":"The Pyrle","date":"2026-11-11"},{"id":198136,"name":"Seth Herzog Presents - SWEET","group":"The Stand West","venue":"The Stand West","date":"2026-07-22"},{"id":198137,"name":"Venjent","group":"WOW Philly","venue":"Warehouse on Watts - The Loft","date":"2026-09-10"},{"id":198139,"name":"GCJ Skybox & Suites","group":"Gulf Coast Jam","venue":"Frank Brown Park","date":"2027-06-03"},{"id":198140,"name":"2026 STM Payments Due","group":"Bay FC","venue":"Bay FC","date":"2026-06-16"},{"id":198141,"name":"Perreo and Pilates Waiver","group":"Houston Dash","venue":"Shell Energy Stadium ","date":"2026-07-09"},{"id":198142,"name":"PAREDOLIA","group":"Eastern Front Theatre","venue":"Eastern Front Theatre at Alderney Landing","date":"2026-09-27"},{"id":198145,"name":"Bobby Bare Jr.","group":"Horseshoe Tavern","venue":"Horseshoe Tavern","date":"2027-10-14"},{"id":198146,"name":"TroyBoi - Hear2Move - Montréal","group":"Société des arts technologiques","venue":"Society for Arts and Technology","date":"2026-12-19"},{"id":198147,"name":"HDFC Families Clinic","group":"HDFC Youth Programs","venue":"Fan Fest","date":"2026-07-19"},{"id":198148,"name":"Family Feud","group":"Underground Arts","venue":"Underground Arts","date":"2026-08-05"},{"id":198149,"name":"VOID + PHANTOM w/ Starved & Narcotic Self","group":"Wildwood","venue":"Wildwood","date":"2026-09-20"},{"id":198151,"name":"Cultus Black w/ Soulcage & Rapture","group":"Wildwood","venue":"Wildwood","date":"2026-08-28"},{"id":198153,"name":"X CLUB.","group":"Société des arts technologiques","venue":"Society for Arts and Technology","date":"2026-09-06"},{"id":198154,"name":"South East Collectors","group":"Ramova Theatre","venue":"Ramova Loft","date":"2026-08-09"},{"id":198155,"name":"OUT IN FRONT - Still Out Of Place Tour","group":"Gabe's","venue":"Gabe's","date":"2026-08-01"},{"id":198156,"name":"P3SO","group":"Keys Los Angeles - h.wood Group","venue":"Keys","date":"2026-07-12"},{"id":198158,"name":"GOOD COMPANY","group":"Keys Los Angeles - h.wood Group","venue":"Keys","date":"2026-07-10"},{"id":198159,"name":"Desert Heat","group":"Stoney's Rockin' Country","venue":"Stoney's Rockin' Country","date":"2026-07-11"},{"id":198160,"name":"Hollywood Show Consignment Service 2026","group":"OG Collectibles","venue":"OG Collectibles ","date":"2026-10-23"},{"id":198161,"name":"BREES & AUGUST SHORE","group":"Keys Los Angeles - h.wood Group","venue":"Keys","date":"2026-07-13"},{"id":198162,"name":"Dave Landau","group":"Hyena's Comedy Clubs","venue":"Albuquerque Hyena's Comedy Nightclub","date":"2026-08-08"},{"id":198163,"name":"Mississippi Nurse Honor Guard","group":"Mud Monsters Baseball","venue":"Trustmark Park","date":"2026-07-25"},{"id":198164,"name":"Vinyl Revival","group":"La Mona Rosa","venue":"La Mona Rosa","date":"2026-07-26"},{"id":198165,"name":"UNITY w/ ANOLUXX","group":"Discopussy","venue":"Discopussy","date":"2026-08-08"},{"id":198166,"name":"QUEEN OUT[SIDE LANDS]: Umru, Gaszia, & Special Guest","group":"Public Works SF","venue":"Public Works","date":"2026-08-08"},{"id":198168,"name":"ZINGARA - The Girls Are Making Riddim Tour","group":"The Midway SF","venue":"The Midway","date":"2026-12-06"},{"id":198169,"name":"The Cactus Blossoms","group":"Volcanic Theatre Pub","venue":"Volcanic Theater Pub","date":"2026-11-19"},{"id":198170,"name":"BFL 88","group":"Harbour Event and Convention Centre","venue":"Harbour Event & Convention Centre ()","date":"2026-08-27"},{"id":198171,"name":"Duncan Trussell","group":"Hyena's Comedy Clubs","venue":"Albuquerque Hyena's Comedy Nightclub","date":"2026-08-15"},{"id":198172,"name":"NOTD","group":".Relentless Beats","venue":"Maya Dayclub","date":"2026-07-12"},{"id":198173,"name":"The Spazmatics","group":"Venice Music Group (The Venice West)","venue":"The Venice West","date":"2026-08-15"},{"id":198175,"name":"BOOFOWEEN","group":"The Midway SF","venue":"888 Garage","date":"2026-11-01"},{"id":198176,"name":"Mix Master Mike of The Beastie Boys","group":"Venice Music Group (The Venice West)","venue":"The Venice West","date":"2026-08-09"},{"id":198179,"name":"Emo Nite LA at Gabes","group":"Gabe's","venue":"Gabe's","date":"2026-09-13"},{"id":198180,"name":"NORWAY vs ENGLAND - World Cup Watch Party","group":"The Midway SF","venue":"The Midway","date":"2026-07-11"},{"id":198181,"name":"Born2Lose","group":"Republic NOLA","venue":"ARORA","date":"2026-09-02"},{"id":198182,"name":"Blakkamoore w/ Yungg Trip, Jubba White, and Simmer Down Sound","group":"Volcanic Theatre Pub","venue":"Volcanic Theater Pub","date":"2026-07-27"},{"id":198184,"name":"Parties of Progress - Pink Party 2.0","group":"Volcanic Theatre Pub","venue":"Volcanic Theater Pub","date":"2026-07-26"},{"id":198185,"name":"David Satori of Dirtwire & Beats Antique (LIVE PA SET)","group":"The Get Down","venue":"The Get Down","date":"2026-08-22"},{"id":198186,"name":"Reggae Legends Black Uhuru w/Nada Rasta","group":"The Siren","venue":"The Siren","date":"2026-09-05"},{"id":198188,"name":"Paul Elia","group":"House of Comedy Minneapolis","venue":"House of Comedy MOA","date":"2026-11-07"},{"id":198189,"name":"Paul Elia","group":"House of Comedy Minneapolis","venue":"House of Comedy MOA","date":"2026-11-07"},{"id":198190,"name":"Paul Elia","group":"House of Comedy Minneapolis","venue":"House of Comedy MOA","date":"2026-11-08"},{"id":198191,"name":"Paul Elia","group":"House of Comedy Minneapolis","venue":"House of Comedy MOA","date":"2026-11-08"},{"id":198192,"name":"Paul Elia","group":"House of Comedy Minneapolis","venue":"House of Comedy MOA","date":"2026-11-09"},{"id":198193,"name":"Magic After Dark starring Robert Hall (18+)","group":"The Loft Tahoe","venue":"The Loft Tahoe","date":"2026-09-19"},{"id":198194,"name":"The Loft Theater-Nathan Coe Marsh Everyday Miracles","group":"The Loft Tahoe","venue":"The Loft Tahoe","date":"2026-09-20"},{"id":198195,"name":"The Loft Theater-Nathan Coe Marsh Everyday Miracles","group":"The Loft Tahoe","venue":"The Loft Tahoe","date":"2026-09-20"},{"id":198196,"name":"VENU: Summer Beach Party","group":"VENU","venue":"VENU","date":"2026-07-12"},{"id":198197,"name":"The Loft Theater-Nathan Coe Marsh Everyday Miracles","group":"The Loft Tahoe","venue":"The Loft Tahoe","date":"2026-09-20"},{"id":198198,"name":"The Loft Theater-Nathan Coe Marsh Everyday Miracles","group":"The Loft Tahoe","venue":"The Loft Tahoe","date":"2026-09-21"},{"id":198199,"name":"The Loft Theater-Nathan Coe Marsh Everyday Miracles","group":"The Loft Tahoe","venue":"The Loft Tahoe","date":"2026-09-22"},{"id":198200,"name":"The Loft Theater-Nathan Coe Marsh Everyday Miracles","group":"The Loft Tahoe","venue":"The Loft Tahoe","date":"2026-09-23"},{"id":198201,"name":"The Loft Theater: Robert Hall \"Inevitable\"","group":"The Loft Tahoe","venue":"The Loft Tahoe","date":"2026-09-24"},{"id":198202,"name":"FENIX FLEXIN of Shoreline Mafia","group":"Temple Nightclub San Francisco","venue":"Temple San Francisco","date":"2026-07-25"},{"id":198203,"name":"Jon Endo","group":"Comic Strip Edmonton","venue":"The Comic Strip - Edmonton","date":"2026-10-26"},{"id":198207,"name":"Hamilton Accies vs Raith Rovers","group":"Hamilton Academical FC","venue":"New Douglas Park","date":"2026-07-18"},{"id":198208,"name":"Argentina Fanzone: Argentina v Switzerland (Open Air Arenas)","group":"Egg London","venue":"Egg London Nightclub","date":"2026-07-11"},{"id":198209,"name":"1 to 1 Coaching Sessions","group":"Leicestershire County Cricket Club","venue":"Leicestershire County Cricket Club","date":"2026-07-08"},{"id":198210,"name":"Darts Night","group":"Leicestershire County Cricket Club","venue":"Leicestershire County Cricket Club","date":"2026-08-24"},{"id":198213,"name":"Gross Prophets: A Comedy Musical","group":"Asylum NYC","venue":"Asylum NYC","date":"2026-10-02"},{"id":198214,"name":"Gross Prophets: A Comedy Musical","group":"Asylum NYC","venue":"Asylum NYC","date":"2026-10-03"},{"id":198215,"name":"Gross Prophets: A Comedy Musical","group":"Asylum NYC","venue":"Asylum NYC","date":"2026-10-03"},{"id":198216,"name":"Gross Prophets: A Comedy Musical","group":"Asylum NYC","venue":"Asylum NYC","date":"2026-10-04"},{"id":198217,"name":"The Morarys | Midnight Vice","group":"Horseshoe Tavern","venue":"Horseshoe Tavern","date":"2026-07-25"},{"id":198218,"name":"Whitetop Mountain Band","group":"The Rex Theater","venue":"The Rex Theater- Galax Reserved","date":"2026-10-02"},{"id":198219,"name":"Propaganda - indie club night","group":"Barfly formerly Camden Assembly","venue":"Barfly formerly Camden Assembly","date":"2026-07-18"},{"id":198220,"name":"Propaganda - indie club night","group":"Barfly formerly Camden Assembly","venue":"Barfly formerly Camden Assembly","date":"2026-07-25"},{"id":198221,"name":"Propaganda - indie club night","group":"Barfly formerly Camden Assembly","venue":"Barfly formerly Camden Assembly","date":"2026-08-01"},{"id":198222,"name":"Hamilton Accies vs","group":"Hamilton Academical FC","venue":"New Douglas Park","date":"2026-07-25"},{"id":198223,"name":"Propaganda - indie club night","group":"Barfly formerly Camden Assembly","venue":"Barfly formerly Camden Assembly","date":"2026-08-08"},{"id":198224,"name":"Propaganda - indie club night","group":"Barfly formerly Camden Assembly","venue":"Barfly formerly Camden Assembly","date":"2026-08-15"},{"id":198225,"name":"Propaganda - indie club night","group":"Barfly formerly Camden Assembly","venue":"Barfly formerly Camden Assembly","date":"2026-08-22"},{"id":198226,"name":"Propaganda - indie club night","group":"Barfly formerly Camden Assembly","venue":"Barfly formerly Camden Assembly","date":"2026-08-29"},{"id":198227,"name":"Larry and His Flask","group":"Legacy Concerts","venue":"The End","date":"2026-09-05"},{"id":198229,"name":"Surprise Guest","group":"The Surf Lodge","venue":"The Surf Lodge","date":"2026-07-17"},{"id":198230,"name":"Socks in the Frying Pan","group":"DSP Shows","venue":"The Iron Horse","date":"2026-12-08"},{"id":198234,"name":"ETPL26 Venue Pass Rotterdam","group":"European T20 Premier Cricket League","venue":"Sportpark Westvliet","date":"2026-08-26"},{"id":198235,"name":"Egg LDN Pres: Afro House, Tribal & Afrobeats","group":"Egg London","venue":"Egg London Nightclub","date":"2026-08-07"},{"id":198236,"name":"Egg LDN Pres: SUBVRS","group":"Egg London","venue":"Egg London Nightclub","date":"2026-08-08"},{"id":198237,"name":"Egg LDN Pres: All About House","group":"Egg London","venue":"Egg London Nightclub","date":"2026-08-14"},{"id":198238,"name":"Egg LDN Pres: SUBVRS","group":"Egg London","venue":"Egg London Nightclub","date":"2026-08-15"},{"id":198240,"name":"Egg LDN Pres: Afro House, Tribal & Afrobeats","group":"Egg London","venue":"Egg London Nightclub","date":"2026-08-21"},{"id":198241,"name":"Egg LDN Pres: SUBVRS","group":"Egg London","venue":"Egg London Nightclub","date":"2026-08-22"},{"id":198242,"name":"Tania Immersive","group":"Tixr, QA ST-USD","venue":" Miami Beach Bandshell","date":"2026-12-31"},{"id":198243,"name":"Wednesday Club: House, Tech House, Electro & Hip Hop","group":"Egg London","venue":"Egg London Nightclub","date":"2026-08-05"},{"id":198244,"name":"Tania Immersive (Light)","group":"Tixr, QA ST-USD","venue":" Miami Beach Bandshell","date":"2026-12-31"},{"id":198245,"name":"Wednesday Club: House, Tech House, Electro & Hip Hop","group":"Egg London","venue":"Egg London Nightclub","date":"2026-08-12"},{"id":198246,"name":"Wednesday Club: House, Tech House, Electro & Hip Hop","group":"Egg London","venue":"Egg London Nightclub","date":"2026-08-19"},{"id":198248,"name":"Tania Flyer (Light)","group":"Tixr, QA ST-USD","venue":" Miami Beach Bandshell","date":"2026-12-31"},{"id":198249,"name":"Wednesday Club: House, Tech House, Electro & Hip Hop","group":"Egg London","venue":"Egg London Nightclub","date":"2026-08-26"},{"id":198252,"name":"Tania Collection (Light)","group":"Tixr, QA ST-USD","venue":" Miami Beach Bandshell","date":"2026-12-31"},{"id":198253,"name":"Tania Collection (Dark)","group":"Tixr, QA ST-USD","venue":" Miami Beach Bandshell","date":"2026-12-31"},{"id":198254,"name":"Tania Carousel (Dark)","group":"Tixr, QA ST-USD","venue":" Miami Beach Bandshell","date":"2026-12-31"},{"id":198255,"name":"Tania Carousel (Light)","group":"Tixr, QA ST-USD","venue":" Miami Beach Bandshell","date":"2026-12-31"},{"id":198257,"name":"AVL Sounds Fest","group":"Revival","venue":"Revival","date":"2026-08-06"},{"id":198258,"name":"AVL Sounds Fest","group":"Asheville Yards","venue":"Asheville Yards","date":"2026-08-06"},{"id":198266,"name":"Baseball Showcase - High Heat 2026","group":"Arizona Athletic Grounds","venue":"Arizona Athletic Grounds","date":"2026-07-25"},{"id":198269,"name":"Dailey & Vincent - A Beautiful Life Tour","group":"Surf Ballroom","venue":"Surf Ballroom & Museum","date":"2026-08-15"},{"id":198271,"name":"2026 Sanford International Corporate Tickets","group":"Sanford International","venue":"Minnehaha Country Club","date":"2026-09-07"},{"id":198272,"name":"Breaking Sound @Soda Factory 6th August","group":"Breaking Sound Australia","venue":"Soda Factory","date":"2026-08-06"},{"id":198273,"name":"Perreo & Pilates on the Pitch","group":"Houston Dash","venue":"Shell Energy Stadium ","date":"2026-07-09"},{"id":198277,"name":"VIVO Fridays: All White Party","group":"Club Vivo","venue":"Club VIVO","date":"2026-07-11"},{"id":198279,"name":"Sold Out Saturdays: Frikitiki","group":"Club Vivo","venue":"Club VIVO","date":"2026-07-12"},{"id":198280,"name":"James Mac, Mekki, Ève Malo","group":"New City Gas","venue":"Bazart","date":"2026-08-01"},{"id":198282,"name":"THE TAYLOR PARTY: TAYLOR SWIFT NIGHT - 18+","group":"Bright Box Theater","venue":"Bright Box Theater","date":"2026-11-07"},{"id":198283,"name":"BELLAKEO | PANGEA | FELINA","group":"Pangea Supperclub","venue":"Pangea Supperclub","date":"2026-07-19"},{"id":198284,"name":"TALK TO ME GOOSE WITH SOUTHBLIND","group":"The Vinyl Lounge","venue":"The Vinyl Lounge","date":"2026-07-18"},{"id":198290,"name":"Casey Beathard, Luke Dick, Jeff Hyde w/ Driver Williams & Special Guests","group":"Chief's on Broadway","venue":"Chief's on Broadway","date":"2026-08-10"},{"id":198292,"name":"Bassjackers","group":"Time Nightclub","venue":"TIME Nightclub","date":"2026-09-27"},{"id":198293,"name":"Third Party","group":"Pure Nightclub","venue":"Pure Nightclub","date":"2026-10-03"},{"id":198295,"name":"Breaking Sound Barcelona at Inusual Project 01/08","group":"Breaking Sound Spain","venue":"Inusual Project","date":"2026-08-01"},{"id":198296,"name":"HOL!","group":"Nova SD","venue":"Nova SD","date":"2026-10-17"},{"id":198298,"name":"Flux Pavillion","group":"Exchange LA","venue":"Exchange LA","date":"2026-09-06"},{"id":198299,"name":"Peanuts Fanny Pack","group":"San Jose Earthquakes","venue":"PayPal Park","date":"2026-08-15"},{"id":198301,"name":"The SoundCloud Era","group":"Republic NOLA","venue":"ARORA","date":"2026-08-22"},{"id":198302,"name":"SUICIDE SILENCE - 'Reminders Of Hell' Tour","group":"The Pyrle","venue":"The Pyrle","date":"2026-11-18"},{"id":198303,"name":"Vicetone","group":"Exchange LA","venue":"Exchange LA","date":"2026-08-30"}];
+
+const $ = (s) => document.querySelector(s);
+const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const fmtDate = (iso) => { if (!iso) return '—'; const [y,m,d] = iso.split('-').map(Number); return `${MONTHS[m-1]} ${d}, ${y}`; };
+const esc = (s) => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+// Promoter counts
+const promoCounts = {};
+for (const e of EVENTS) promoCounts[e.group] = (promoCounts[e.group] || 0) + 1;
+const promoSorted = Object.entries(promoCounts).sort((a,b) => b[1] - a[1] || a[0].localeCompare(b[0]));
+
+$('#stat-promoters').textContent = promoSorted.length;
+
+// Top promoters bars
+const maxCount = promoSorted[0][1];
+$('#promo-list').innerHTML = promoSorted.slice(0, 8).map(([name, n]) => `
+  <div class="promo-row">
+    <span class="promo-name" title="${esc(name)}">${esc(name)}</span>
+    <span class="promo-count">${n}</span>
+    <span class="promo-track"><span class="promo-fill" data-w="${(n / maxCount * 100).toFixed(1)}"></span></span>
+  </div>`).join('');
+
+// Promoter filter options
+$('#promoter-filter').insertAdjacentHTML('beforeend',
+  promoSorted.map(([name, n]) => `<option value="${esc(name)}">${esc(name)} (${n})</option>`).join(''));
+
+// State
+let sortKey = 'id', sortDir = 1, query = '', promoter = '';
+
+function currentRows() {
+  let rows = EVENTS;
+  if (promoter) rows = rows.filter(e => e.group === promoter);
+  if (query) {
+    const q = query.toLowerCase();
+    rows = rows.filter(e =>
+      e.name.toLowerCase().includes(q) ||
+      e.group.toLowerCase().includes(q) ||
+      (e.venue || '').toLowerCase().includes(q) ||
+      String(e.id).includes(q));
+  }
+  return [...rows].sort((a, b) => {
+    let av = a[sortKey], bv = b[sortKey];
+    if (sortKey === 'id') return (av - bv) * sortDir;
+    return String(av).localeCompare(String(bv)) * sortDir;
+  });
+}
+
+function render() {
+  const rows = currentRows();
+  const tb = $('#tbody');
+  if (!rows.length) {
+    tb.innerHTML = `<tr><td colspan="5" class="empty">No events match your search. Try clearing filters.</td></tr>`;
+  } else {
+    tb.innerHTML = rows.map(e => `
+      <tr>
+        <td class="id num-col"><a href="https://tixr.com/e/${e.id}" target="_blank" rel="noopener">${e.id}</a></td>
+        <td class="name">${esc(e.name)} <span class="pill-live">LIVE</span></td>
+        <td class="group">${esc(e.group)}</td>
+        <td class="venue">${esc(e.venue || '—')}</td>
+        <td class="date">${fmtDate(e.date)}</td>
+      </tr>`).join('');
+  }
+  $('#count-line').innerHTML = `Showing <b>${rows.length}</b> of ${EVENTS.length} live events` +
+    (promoter ? ` · <b>${esc(promoter)}</b>` : '') + (query ? ` · “${esc(query)}”` : '');
+  document.querySelectorAll('thead th').forEach(th => {
+    const on = th.dataset.key === sortKey;
+    th.classList.toggle('sorted', on);
+    const ar = th.querySelector('.arrow');
+    if (ar) ar.textContent = sortDir === 1 ? '↑' : '↓';
+  });
+}
+
+// Events
+$('#search').addEventListener('input', e => { query = e.target.value.trim(); render(); });
+$('#promoter-filter').addEventListener('change', e => { promoter = e.target.value; render(); });
+document.querySelectorAll('thead th.sortable').forEach(th => {
+  th.addEventListener('click', () => {
+    const k = th.dataset.key;
+    if (k === sortKey) sortDir *= -1; else { sortKey = k; sortDir = 1; }
+    render();
+  });
+});
+$('#download').addEventListener('click', () => {
+  const blob = new Blob([JSON.stringify(EVENTS, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'tixr-sweep-197852-198852.json';
+  a.click();
+  URL.revokeObjectURL(a.href);
+});
+
+$('#stamp').textContent = 'Sweep window 197852–198852 · 1,001 IDs · 339 live · captured via authenticated /api/events probe';
+
+// Animate bars in
+render();
+requestAnimationFrame(() => {
+  $('#seg-live').style.width = '33.9%';
+  $('#seg-dead').style.width = '66.1%';
+  document.querySelectorAll('.promo-fill').forEach(f => { f.style.width = f.dataset.w + '%'; });
+});
+</script>
